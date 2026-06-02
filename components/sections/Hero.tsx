@@ -16,7 +16,7 @@ const showcaseCategories = [
   },
   {
     name: "Almonds",
-    image: "/almonds.jpg",
+    image: "/kacha-badam.jpg",
   },
   {
     name: "Pistachio",

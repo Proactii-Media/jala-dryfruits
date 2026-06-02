@@ -22,7 +22,7 @@ const categoryCards = [
   {
     id: "almonds",
     title: "Almonds",
-    image: "/almonds.jpg",
+    image: "/kacha-badam.jpg",
   },
   {
     id: "pistachio",

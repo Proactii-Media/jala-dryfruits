@@ -7,7 +7,7 @@ export interface Product {
   image: string;
 }
 
-const img = (slug: string) => `/images/products/${slug}.svg`;
+// const img = (slug: string) => `/images/products/${slug}.svg`;
 
 export const categoryData = [
   {
@@ -18,7 +18,7 @@ export const categoryData = [
   {
     id: "almonds",
     title: "Almonds",
-    image: "/images/categories/almond.jpg",
+    image: "/products/kacha-badam.jpg",
   },
   {
     id: "pistachio",
