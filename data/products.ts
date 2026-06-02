@@ -32,7 +32,7 @@ export const categoryData = [
   },
 ];
 
-export const products = [
+export const products: Product[] = [
   {
     id: "w400",
     name: "W400",

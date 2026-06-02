@@ -37,10 +37,6 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
 
-          <p className="mt-2 text-sm text-white/80 line-clamp-2">
-            {product.description}
-          </p>
-
           <button
             type="button"
             onClick={() => scrollToSection("contact")}
