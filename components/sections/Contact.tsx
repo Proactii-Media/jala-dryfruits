@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 import { contactInfo, socialLinks } from "@/data/site";
 import { staggerContainer, staggerItem } from "@/lib/motion";
+import { useState } from "react";
 
 const socialIconMap = {
   whatsapp: "💬",
@@ -16,6 +17,52 @@ const socialIconMap = {
 } as const;
 
 export function Contact() {
+  const [loading, setLoading] = useState(false);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      alert("Message Sent!");
+
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+
+      alert("Failed to send message");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AnimatedSection
       id="contact"
@@ -131,7 +178,7 @@ export function Contact() {
               We'd love to hear from you.
             </p>
 
-            <form className="mt-8 space-y-5">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
               <div>
                 <label className="mb-2 block text-sm font-medium text-charcoal">
                   Full Name
@@ -139,6 +186,13 @@ export function Contact() {
 
                 <input
                   type="text"
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      name: e.target.value,
+                    })
+                  }
                   placeholder="Enter your full name"
                   className="w-full rounded-2xl border border-black/10 bg-cream px-4 py-3 outline-none transition focus:border-primary"
                 />
@@ -151,22 +205,34 @@ export function Contact() {
 
                 <input
                   type="email"
+                  value={form.email}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      email: e.target.value,
+                    })
+                  }
                   placeholder="Enter your email"
                   className="w-full rounded-2xl border border-black/10 bg-cream px-4 py-3 outline-none transition focus:border-primary"
                 />
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-charcoal">
-                  Phone Number
-                </label>
+              <label className="mb-2 block text-sm font-medium text-charcoal">
+                Phone Number
+              </label>
 
-                <input
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  className="w-full rounded-2xl border border-black/10 bg-cream px-4 py-3 outline-none transition focus:border-primary"
-                />
-              </div>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    phone: e.target.value,
+                  })
+                }
+                placeholder="Enter your phone number"
+                className="w-full rounded-2xl border border-black/10 bg-cream px-4 py-3 outline-none transition focus:border-primary"
+              />
 
               <div>
                 <label className="mb-2 block text-sm font-medium text-charcoal">
@@ -175,6 +241,13 @@ export function Contact() {
 
                 <textarea
                   rows={5}
+                  value={form.message}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      message: e.target.value,
+                    })
+                  }
                   placeholder="Tell us how we can help..."
                   className="w-full rounded-2xl border border-black/10 bg-cream px-4 py-3 outline-none transition focus:border-primary"
                 />
@@ -182,9 +255,11 @@ export function Contact() {
 
               <button
                 type="submit"
-                className="inline-flex items-center rounded-2xl bg-primary px-6 py-3 font-medium text-white transition hover:opacity-90"
+                disabled={loading}
+                className="inline-flex items-center rounded-2xl bg-primary px-6 py-3 font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
+
                 <Send className="ml-2 h-4 w-4" />
               </button>
             </form>

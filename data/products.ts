@@ -4,9 +4,7 @@ export interface Product {
   id: string;
   name: string;
   category: ProductCategory;
-  description: string;
   image: string;
-  variants: string[];
 }
 
 const img = (slug: string) => `/images/products/${slug}.svg`;
