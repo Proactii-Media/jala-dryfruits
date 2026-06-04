@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { staggerItem } from "@/lib/motion";
 import type { Product } from "@/data/products";
 import { MessageCircle } from "lucide-react";
 import { scrollToSection } from "@/lib/utils";
@@ -14,9 +13,10 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <motion.article
-      variants={staggerItem}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
       whileHover={{ y: -8 }}
-      className="group relative overflow-hidden rounded-3xl shadow-soft hover:shadow-glow"
+      className="group overflow-hidden rounded-3xl border border-white/10 shadow-soft"
     >
       {/* Full Card Image */}
       <div className="relative h-[420px] overflow-hidden">
@@ -24,6 +24,8 @@ export function ProductCard({ product }: ProductCardProps) {
           src={product.image}
           alt={product.name}
           fill
+          priority
+          loading="eager"
           className="object-cover transition-transform duration-700 group-hover:scale-110"
           sizes="(max-width: 768px) 50vw, 25vw"
         />

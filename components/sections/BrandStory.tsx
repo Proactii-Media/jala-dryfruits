@@ -13,6 +13,14 @@ const highlights = [
   "Retail, Wholesale & Commercial Supply",
 ];
 
+const brandImages = [
+  "/brand/exotic1.jpeg",
+  "/brand/exotic2.jpeg",
+  "/brand/exotic3.jpeg",
+  "/brand/exotic4.jpeg",
+  "/brand/exotic5.jpeg",
+];
+
 export function BrandStory() {
   return (
     <AnimatedSection id="brandstory" className="relative py-20 md:py-28">
@@ -78,6 +86,55 @@ export function BrandStory() {
             </div>
           </motion.div>
         </div>
+        {/* Brand Gallery */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-20"
+        >
+          <div className="mb-8 text-center">
+            <h3 className="text-2xl font-bold text-charcoal md:text-3xl">
+              Exotic Fusion Collection
+            </h3>
+
+            <p className="mt-2 text-charcoal/60">
+              Premium quality dry fruits and spices packed with freshness and
+              care.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+            {brandImages.map((image, index) => (
+              <motion.div
+                key={image}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.03,
+                }}
+                className="group relative overflow-hidden rounded-3xl shadow-soft"
+              >
+                <Image
+                  src={image}
+                  alt={`Exotic Fusion ${index + 1}`}
+                  width={400}
+                  height={500}
+                  className="h-72 w-full object-cover transition duration-700 group-hover:scale-110"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </AnimatedSection>
   );
